@@ -4,12 +4,14 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Column;
 
 @Entity
 public class Store {
@@ -21,6 +23,7 @@ public class Store {
 	private Address address; 
 	private Double storeRating;
 	@OneToMany (mappedBy="store")
+	@AttributeOverride( name = "storeId", column = @Column(name = "store_store_id"))
 	private List<Product> product = new ArrayList<>();
 	private LocalTime openTill;
 	private String storeDescription;	

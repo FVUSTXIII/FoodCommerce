@@ -24,4 +24,6 @@ public class UserController {
 		UserResponseDTO userResponseDTO = userService.loginUser(userRequestDTO);
 		return new ResponseEntity<UserResponseDTO>(userResponseDTO, HttpStatus.OK);
 	}
+	
+	
 }
