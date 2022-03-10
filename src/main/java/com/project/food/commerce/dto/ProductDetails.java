@@ -1,23 +1,27 @@
 package com.project.food.commerce.dto;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+public class ProductDetails {
 
-public class ProductRequestDTO {
-	
-	@NotEmpty(message = "Product name should not be empty")
+	private Integer productId;
 	private String productName;
 	private Double productPrice;
 	private String productDescription;
-	
-	@NotEmpty(message = "Product category should not be empty")
 	private String productCategory;
 	private Boolean isAvailable;
+	//private Store store;
 	
-	//@Size(min=1, message = "Store id must be greater than or equal to 1")
-	@NotNull
-	private Integer storeId; 
-	
+	public Integer getProductId() {
+		return productId;
+	}
+	public String getProductCategory() {
+		return productCategory;
+	}
+	public void setProductCategory(String productCategory) {
+		this.productCategory = productCategory;
+	}
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
 	public String getProductName() {
 		return productName;
 	}
@@ -36,22 +40,11 @@ public class ProductRequestDTO {
 	public void setProductDescription(String productDescription) {
 		this.productDescription = productDescription;
 	}
-	public String getProductCategory() {
-		return productCategory;
-	}
-	public void setProductCategory(String productCategory) {
-		this.productCategory = productCategory;
-	}
 	public Boolean getIsAvailable() {
 		return isAvailable;
 	}
 	public void setIsAvailable(Boolean isAvailable) {
 		this.isAvailable = isAvailable;
 	}
-	public Integer getStoreId() {
-		return storeId;
-	}
-	public void setStoreId(Integer storeId) {
-		this.storeId = storeId;
-	}
+
 }

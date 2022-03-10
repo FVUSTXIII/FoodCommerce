@@ -1,5 +1,7 @@
 package com.project.food.commerce.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +20,10 @@ public class UserController {
 	UserService userService;
 
 	@PostMapping("/login")
-	public ResponseEntity<UserResponseDTO> loginUser(@RequestBody UserRequestDTO userRequestDTO){
+	public ResponseEntity<UserResponseDTO> loginUser(@Valid @RequestBody UserRequestDTO userRequestDTO){
 		UserResponseDTO userResponseDTO = userService.loginUser(userRequestDTO);
 		return new ResponseEntity<UserResponseDTO>(userResponseDTO, HttpStatus.OK);
-		
-		//Comentariowea
 	}
+	
+	
 }
