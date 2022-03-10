@@ -3,6 +3,8 @@ package com.project.food.commerce.service.implementations;
 import java.util.Optional;
 
 import com.project.food.commerce.entity.Store;
+import com.project.food.commerce.exception.StoreNotFoundException;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,9 +33,12 @@ public class ProductServiceImpl implements ProductService{
 		BeanUtils.copyProperties(productRequestDto, product);
 		product.setProductCategory(ProductCategory.valueOf(productRequestDto.getProductCategory()));
 		Optional<Store> storeOptional =  storeRepo.findById(productRequestDto.getStoreId());
-		if (storeOptional.isPresent()) {
-			product.setStore(storeOptional.get());
+		if (!storeOptional.isPresent()) {
+			throw new StoreNotFoundException("Store Not Found: "+ productRequestDto.getStoreId());
 		}
+			
+			
+		product.setStore(storeOptional.get());
 		productRepo.save(product);
 	}
 	

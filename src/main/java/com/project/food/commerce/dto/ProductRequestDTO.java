@@ -1,19 +1,21 @@
 package com.project.food.commerce.dto;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
-
-import com.project.food.commerce.entity.ProductCategory;
-import com.project.food.commerce.entity.Store;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class ProductRequestDTO {
+	
+	@NotEmpty(message = "Product name should not be empty")
 	private String productName;
 	private Double productPrice;
 	private String productDescription;
 	
+	@NotEmpty(message = "Product category should not be empty")
 	private String productCategory;
 	private Boolean isAvailable;
+	
+	//@Size(min=1, message = "Store id must be greater than or equal to 1")
+	@NotNull
 	private Integer storeId; 
 	
 	public String getProductName() {
