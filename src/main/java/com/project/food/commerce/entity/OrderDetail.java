@@ -27,6 +27,7 @@ public class OrderDetail {
 	@ElementCollection
 	@JoinTable(name="orderproduct", joinColumns = @JoinColumn(name="orderDetailId"))
 	private List<OrderProduct> orderProduct = new ArrayList<>();
+	
 	@Enumerated(value = EnumType.STRING) 
 	private Status status;
 
