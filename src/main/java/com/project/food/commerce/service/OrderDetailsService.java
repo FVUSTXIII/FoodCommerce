@@ -8,7 +8,7 @@ import com.project.food.commerce.dto.ProductResponseDTO;
 public interface OrderDetailsService {
 
 	OrderResponseDTO saveOrderDetails(OrderRequestDTO orderRequestDTO);
-	OrderHistoryResponseDTO getAllOrderHistory(Integer userId);
+	OrderHistoryResponseDTO getAllOrderHistory(Integer pageNo, Integer pageSize,Integer userId);
 	
 	
 }

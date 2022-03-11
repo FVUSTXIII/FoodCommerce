@@ -53,9 +53,11 @@ public class ProductServiceImpl implements ProductService{
 	
 	@Override
 	public ProductResponseDTO getAllProductsInStore(Integer pageNo, Integer pageSize, Integer storeId) {
+		
 		Pageable paging = PageRequest.of(pageNo, pageSize);
 		Page<Product> productPage = productRepo.findByStoreStoreId(storeId,paging);
 		List<Product> productsList = productPage.getContent();
+		
 		Optional<Store> _store = storeRepo.findById(storeId); 
 		if (!_store.isPresent()) {
 			throw new StoreNotFoundException("Store Not Found: " + storeId);

@@ -6,6 +6,6 @@ import com.project.food.commerce.dto.ProductResponseDTO;
 public interface ProductService {
 
 	void saveProductDetails(ProductRequestDTO productRequestDto);
-	ProductResponseDTO getAllProductsInStore(Integer storeId, Integer pageSize, Integer storeId2);
+	ProductResponseDTO getAllProductsInStore(Integer pageNo, Integer pageSize, Integer storeId);
 	
 }

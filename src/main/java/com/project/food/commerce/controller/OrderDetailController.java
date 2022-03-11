@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.food.commerce.dto.OrderHistoryResponseDTO;
@@ -28,8 +29,11 @@ public class OrderDetailController {
 	}
 	
 	@GetMapping("/users/{userId}/orderdetails")
-	public ResponseEntity<OrderHistoryResponseDTO> getAllOrderHistory(@PathVariable("userId") Integer userId){
-		OrderHistoryResponseDTO orderHistoryResponseDto =  orderDetailsService.getAllOrderHistory(userId);
+	public ResponseEntity<OrderHistoryResponseDTO> getAllOrderHistory(
+			@RequestParam(defaultValue = "0")Integer pageNo,
+			@RequestParam(defaultValue = "5")Integer pageSize, 
+			@PathVariable("userId") Integer userId){
+		OrderHistoryResponseDTO orderHistoryResponseDto =  orderDetailsService.getAllOrderHistory(pageNo, pageSize, userId);
 		return new ResponseEntity<OrderHistoryResponseDTO>(orderHistoryResponseDto, HttpStatus.OK);
 	}
 }

@@ -8,6 +8,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.project.food.commerce.dto.OrderDetailProduct;
@@ -86,30 +89,34 @@ public class OrderDetailsServiceImpl implements OrderDetailsService{
 		return response;
 	}
 
-	@Override
-	public OrderHistoryResponseDTO getAllOrderHistory(Integer userId) {
-		List<OrderDetail> orderHistoryList = orderRepo.findByUserId(userId);
-		if(!orderHistoryList.isEmpty())
-			{
-			throw new EmptyOrderHistoryException("The order history is empty");
-			}
-		List<OrderHistoryDetails> orderHistoryDetailsList = orderHistoryList.stream()
-				.map(historyDetail -> {
-					    OrderHistoryDetails orderHistoryDetail = new OrderHistoryDetails();
-						BeanUtils.copyProperties(historyDetail, orderHistoryDetail);
-						historyDetail.getOrderProduct().forEach(orderProduct ->{
-							OrderDetailProduct orderDetailProduct = new  OrderDetailProduct();
-							BeanUtils.copyProperties(orderProduct, orderDetailProduct);
-							orderHistoryDetail.addDetailProduct(orderDetailProduct);
-						});
-						orderHistoryDetail.setStoreName(storeRepo.findById(orderHistoryDetail.getStoreId()).get().getStoreName());
-						return orderHistoryDetail;
-					}).collect(Collectors.toList());
-		ResponseDTO responseDTO = new ResponseDTO("Products Details for a Store Fetch Success", 200);
-		OrderHistoryResponseDTO orderHistoryResponseDto = new OrderHistoryResponseDTO();
-		orderHistoryResponseDto.setHistoryList(orderHistoryDetailsList);
-		orderHistoryResponseDto.setResponseDTO(responseDTO);
-		return orderHistoryResponseDto;
-	}
+	 @Override
+	    public OrderHistoryResponseDTO getAllOrderHistory(Integer pageNo, Integer pageSize,Integer userId) {
+			Pageable paging = PageRequest.of(pageNo, pageSize);
+			Page<OrderDetail> orderPage = orderRepo.findByUserId(userId,paging);
+			List<OrderDetail> orderHistoryList = orderPage.getContent();
+	        if(orderHistoryList.isEmpty())
+	            {
+	            throw new EmptyOrderHistoryException("The order history is empty");
+	            }
+	        List<OrderHistoryDetails> orderHistoryDetailsList = orderHistoryList.stream()
+	                .map(historyDetail -> {
+	                        OrderHistoryDetails orderHistoryDetail = new OrderHistoryDetails();
+	                        BeanUtils.copyProperties(historyDetail, orderHistoryDetail);
+	                        historyDetail.getOrderProduct().forEach(orderProduct ->{
+	                            OrderDetailProduct orderDetailProduct = new  OrderDetailProduct();
+	                            BeanUtils.copyProperties(orderProduct, orderDetailProduct);
+	                            orderHistoryDetail.addDetailProduct(orderDetailProduct);
+	                        });
+	                        orderHistoryDetail.setStoreName(storeRepo.findById(orderHistoryDetail.getStoreId()).get().getStoreName());
+	                        return orderHistoryDetail;
+	                    }).collect(Collectors.toList());
+	        ResponseDTO responseDTO = new ResponseDTO("Products Details for a Store Fetch Success", 200);
+	        OrderHistoryResponseDTO orderHistoryResponseDto = new OrderHistoryResponseDTO();
+	        orderHistoryResponseDto.setHistoryList(orderHistoryDetailsList);
+	        orderHistoryResponseDto.setResponseDTO(responseDTO);
+	        return orderHistoryResponseDto;
+	    }
+	 
+
 
 }
