@@ -22,6 +22,7 @@ import com.project.food.commerce.entity.OrderDetail;
 import com.project.food.commerce.entity.OrderProduct;
 import com.project.food.commerce.entity.Product;
 import com.project.food.commerce.entity.Status;
+import com.project.food.commerce.exception.EmptyOrderHistoryException;
 import com.project.food.commerce.exception.NoAvailableProductsException;
 import com.project.food.commerce.exception.NoProductsWithinOrderException;
 import com.project.food.commerce.repository.OrderDetailRepository;
@@ -88,6 +89,10 @@ public class OrderDetailsServiceImpl implements OrderDetailsService{
 	@Override
 	public OrderHistoryResponseDTO getAllOrderHistory(Integer userId) {
 		List<OrderDetail> orderHistoryList = orderRepo.findByUserId(userId);
+		if(!orderHistoryList.isEmpty())
+			{
+			throw new EmptyOrderHistoryException("The order history is empty");
+			}
 		List<OrderHistoryDetails> orderHistoryDetailsList = orderHistoryList.stream()
 				.map(historyDetail -> {
 					    OrderHistoryDetails orderHistoryDetail = new OrderHistoryDetails();

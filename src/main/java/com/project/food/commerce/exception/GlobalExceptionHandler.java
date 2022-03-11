@@ -63,4 +63,11 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.OK);
 	}
 	
+	@ExceptionHandler(EmptyOrderHistoryException.class)
+	public ResponseEntity<ErrorResponse> handleException(EmptyOrderHistoryException ex){
+		ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), ApiConstants.EMPTY_ORDER_HISTORY);
+		errorResponse.setDateTime(LocalDateTime.now());
+		return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.OK);
+	}
+	
 }

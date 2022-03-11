@@ -3,7 +3,7 @@ import com.project.food.commerce.dto.StoreResponseDTO;
 
 public interface StoreService {
 
-	StoreResponseDTO getAllStoreDetails();
+	StoreResponseDTO getAllStoreDetails(Integer pageNo, Integer pageSize);
 	
 
 }

@@ -10,6 +10,9 @@ import com.project.food.commerce.exception.StoreNotFoundException;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.project.food.commerce.dto.ProductDetails;
@@ -49,8 +52,10 @@ public class ProductServiceImpl implements ProductService{
 	
 	
 	@Override
-	public ProductResponseDTO getAllProductsInStore(Integer storeId) {
-		List<Product> productsList = productRepo.findByStoreStoreId(storeId);
+	public ProductResponseDTO getAllProductsInStore(Integer pageNo, Integer pageSize, Integer storeId) {
+		Pageable paging = PageRequest.of(pageNo, pageSize);
+		Page<Product> productPage = productRepo.findByStoreStoreId(storeId,paging);
+		List<Product> productsList = productPage.getContent();
 		Optional<Store> _store = storeRepo.findById(storeId); 
 		if (!_store.isPresent()) {
 			throw new StoreNotFoundException("Store Not Found: " + storeId);
