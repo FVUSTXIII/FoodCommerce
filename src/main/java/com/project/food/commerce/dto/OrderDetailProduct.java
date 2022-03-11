@@ -4,6 +4,8 @@ public class OrderDetailProduct {
 	private Integer productId;
 	private Double productPrice;
 	private Integer productQuantity;
+	
+
 	public Integer getProductId() {
 		return productId;
 	}

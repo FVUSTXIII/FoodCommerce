@@ -16,11 +16,10 @@ public class ProductDetails {
 	public Integer getProductId() {
 		return productId;
 	}
-	
 	public ProductCategory getProductCategory() {
 		return productCategory;
 	}
-
+	
 	public void setProductCategory(ProductCategory productCategory) {
 		this.productCategory = productCategory;
 	}

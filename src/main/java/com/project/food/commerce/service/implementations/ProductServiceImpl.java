@@ -62,6 +62,7 @@ public class ProductServiceImpl implements ProductService{
 		ProductResponseDTO productResponseDto = new ProductResponseDTO();
 		productResponseDto.setProductList(productDetailsList);
 		productResponseDto.setResponseDTO(responseDTO);
+	
 		
 		return productResponseDto;
 	}
