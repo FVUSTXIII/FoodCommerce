@@ -7,9 +7,17 @@ public class StoreDetails {
     private String storeName;
     private String storeDescription;
     private Double storeRating;
-    //private LocalTime openTill;
+    private LocalTime openTill;
     
     
+	public LocalTime getOpenTill() {
+		return openTill;
+	}
+
+	public void setOpenTill(LocalTime openTill) {
+		this.openTill = openTill;
+	}
+
 	public Integer getStoreId() {
 		return storeId;
 	}

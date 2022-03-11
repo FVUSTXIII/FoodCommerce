@@ -28,6 +28,7 @@ public class StoreServiceImpl implements StoreService {
 				.map(store -> {
 						StoreDetails storeDetail = new StoreDetails();
 						BeanUtils.copyProperties(store, storeDetail);
+						System.out.println(storeDetail.getOpenTill()+"    jggkhjhbkjhbkj    "+ store.getOpenTill());
 						return storeDetail;
 					}).collect(Collectors.toList());
 		ResponseDTO responseDTO = new ResponseDTO("Store Details Fetch Success", 200);
