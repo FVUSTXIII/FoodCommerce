@@ -3,6 +3,8 @@ package com.project.food.commerce.dto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.project.food.commerce.entity.ProductCategory;
+
 public class ProductRequestDTO {
 	
 	@NotEmpty(message = "Product name should not be empty")
@@ -36,6 +38,8 @@ public class ProductRequestDTO {
 	public void setProductDescription(String productDescription) {
 		this.productDescription = productDescription;
 	}
+	
+	
 	public String getProductCategory() {
 		return productCategory;
 	}

@@ -24,12 +24,18 @@ public class OrderDetail {
 	private Integer userId;
 	private Integer storeId;
 	private Double totalPrice;
+	@Enumerated(value = EnumType.STRING) 
+	private Status status;
 	@ElementCollection
 	@JoinTable(name="orderproduct", joinColumns = @JoinColumn(name="orderDetailId"))
 	private List<OrderProduct> orderProduct = new ArrayList<>();
-	@Enumerated(value = EnumType.STRING) 
-	private Status status;
+	
+	
 
+	public void addProduct(OrderProduct product) {
+		this.orderProduct.add(product);
+	}
+	
 	public Integer getOrderDetailId() {
 		return orderDetailId;
 	}

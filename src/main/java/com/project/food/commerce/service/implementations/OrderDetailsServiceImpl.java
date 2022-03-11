@@ -1,0 +1,81 @@
+package com.project.food.commerce.service.implementations;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.project.food.commerce.dto.OrderDetailProduct;
+import com.project.food.commerce.dto.OrderHistoryDetails;
+import com.project.food.commerce.dto.OrderHistoryResponseDTO;
+import com.project.food.commerce.dto.OrderRequestDTO;
+import com.project.food.commerce.dto.OrderResponseDTO;
+import com.project.food.commerce.dto.ProductDetails;
+import com.project.food.commerce.dto.ProductResponseDTO;
+import com.project.food.commerce.dto.ResponseDTO;
+import com.project.food.commerce.entity.OrderDetail;
+import com.project.food.commerce.entity.OrderProduct;
+import com.project.food.commerce.entity.Product;
+import com.project.food.commerce.entity.Status;
+import com.project.food.commerce.repository.OrderDetailRepository;
+import com.project.food.commerce.repository.StoreRepository;
+import com.project.food.commerce.service.OrderDetailsService;
+
+@Service
+public class OrderDetailsServiceImpl implements OrderDetailsService{
+
+	@Autowired
+	OrderDetailRepository orderRepo;
+	
+	@Autowired
+	StoreRepository storeRepo;
+	
+	
+	@Override
+	public OrderResponseDTO saveOrderDetails(OrderRequestDTO orderRequestDTO) {
+		OrderDetail orderDetail = new OrderDetail();
+		BeanUtils.copyProperties(orderRequestDTO, orderDetail);
+		orderDetail.setTotalPrice(orderRequestDTO.getTotalPrice());
+		orderRequestDTO
+		.getProductList()
+		.forEach(orderDetailProduct -> {
+			OrderProduct orderProduct = new OrderProduct();
+			BeanUtils.copyProperties(orderDetailProduct, orderProduct);
+			orderDetail.addProduct(orderProduct);
+		});
+		orderDetail.setStatus(Status.ACCEPTED);
+		orderDetail.setOrderDate(LocalDate.now());
+		orderRepo.save(orderDetail);
+		OrderResponseDTO response = new OrderResponseDTO();
+		ResponseDTO responseDTO = new ResponseDTO("Order Placed Successfully", 200);
+		response.setOrderNumber(orderDetail.getOrderDetailId().toString());
+		response.setResponseDTO(responseDTO);
+		return response;
+	}
+
+	@Override
+	public OrderHistoryResponseDTO getAllOrderHistory(Integer userId) {
+		List<OrderDetail> orderHistoryList = orderRepo.findByUserId(userId);
+		List<OrderHistoryDetails> orderHistoryDetailsList = orderHistoryList.stream()
+				.map(historyDetail -> {
+					    OrderHistoryDetails orderHistoryDetail = new OrderHistoryDetails();
+						BeanUtils.copyProperties(historyDetail, orderHistoryDetail);
+						historyDetail.getOrderProduct().forEach(orderProduct ->{
+							OrderDetailProduct orderDetailProduct = new  OrderDetailProduct();
+							BeanUtils.copyProperties(orderProduct, orderDetailProduct);
+							orderHistoryDetail.addDetailProduct(orderDetailProduct);
+						});
+						orderHistoryDetail.setStoreName(storeRepo.findById(orderHistoryDetail.getStoreId()).get().getStoreName());
+						return orderHistoryDetail;
+					}).collect(Collectors.toList());
+		ResponseDTO responseDTO = new ResponseDTO("Products Details for a Store Fetch Success", 200);
+		OrderHistoryResponseDTO orderHistoryResponseDto = new OrderHistoryResponseDTO();
+		orderHistoryResponseDto.setHistoryList(orderHistoryDetailsList);
+		orderHistoryResponseDto.setResponseDTO(responseDTO);
+		return orderHistoryResponseDto;
+	}
+
+}

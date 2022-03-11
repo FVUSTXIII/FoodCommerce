@@ -8,6 +8,7 @@ public class ProductDetails {
 	private String productName;
 	private Double productPrice;
 	private String productDescription;
+	
 	private ProductCategory productCategory;
 	private Boolean isAvailable;
 	//private Store store;
@@ -18,9 +19,11 @@ public class ProductDetails {
 	public ProductCategory getProductCategory() {
 		return productCategory;
 	}
+	
 	public void setProductCategory(ProductCategory productCategory) {
 		this.productCategory = productCategory;
 	}
+
 	public void setProductId(Integer productId) {
 		this.productId = productId;
 	}
