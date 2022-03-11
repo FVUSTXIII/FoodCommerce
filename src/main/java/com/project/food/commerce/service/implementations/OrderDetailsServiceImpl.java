@@ -1,7 +1,9 @@
 package com.project.food.commerce.service.implementations;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
@@ -20,8 +22,10 @@ import com.project.food.commerce.entity.OrderDetail;
 import com.project.food.commerce.entity.OrderProduct;
 import com.project.food.commerce.entity.Product;
 import com.project.food.commerce.entity.Status;
+import com.project.food.commerce.exception.NoAvailableProductsException;
 import com.project.food.commerce.exception.NoProductsWithinOrderException;
 import com.project.food.commerce.repository.OrderDetailRepository;
+import com.project.food.commerce.repository.ProductRepository;
 import com.project.food.commerce.repository.StoreRepository;
 import com.project.food.commerce.service.OrderDetailsService;
 
@@ -34,9 +38,15 @@ public class OrderDetailsServiceImpl implements OrderDetailsService{
 	@Autowired
 	StoreRepository storeRepo;
 	
+	@Autowired
+	ProductRepository productRepo;
+	
+	
+	
 	
 	@Override
 	public OrderResponseDTO saveOrderDetails(OrderRequestDTO orderRequestDTO) {
+		List<String> noAvailable = new ArrayList<String>();
 		OrderDetail orderDetail = new OrderDetail();
 		BeanUtils.copyProperties(orderRequestDTO, orderDetail);
 		orderDetail.setTotalPrice(orderRequestDTO.getTotalPrice());
@@ -44,12 +54,27 @@ public class OrderDetailsServiceImpl implements OrderDetailsService{
 		.getProductList()
 		.forEach(orderDetailProduct -> {
 			OrderProduct orderProduct = new OrderProduct();
+			Optional<Product> product = productRepo.findById(orderDetailProduct.getProductId());
+            if (!product.get().getIsAvailable()) {
+            	noAvailable.add(product.get().getProductName());
+           		}
 			BeanUtils.copyProperties(orderDetailProduct, orderProduct);
 			orderDetail.addProduct(orderProduct);
+			
 		});
+		if(!noAvailable.isEmpty()) {
+			String concatenate = "";
+			for(String s: noAvailable) {
+				concatenate+=s+", ";
+			}
+			concatenate=concatenate.substring(0, concatenate.length()-2);
+			throw new NoAvailableProductsException("These products are not available:  "+ concatenate);	
+		}
+		
 		if (orderDetail.getOrderProduct().isEmpty()) {
 			throw new NoProductsWithinOrderException("This order contains 0 products and cannot be completed.");
 		}
+		
 		orderDetail.setStatus(Status.ACCEPTED);
 		orderDetail.setOrderDate(LocalDate.now());
 		orderRepo.save(orderDetail);

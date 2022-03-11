@@ -37,6 +37,14 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity <ErrorResponse>(errorResponse, HttpStatus.OK);
 	}
 	
+	@ExceptionHandler(NoAvailableProductsException.class)
+	public ResponseEntity<ErrorResponse> handleException(NoAvailableProductsException ex)
+	{
+		ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), ApiConstants.NO_AVAILABLE_PRODUCT);
+		errorResponse.setDateTime(LocalDateTime.now());
+		return new ResponseEntity <ErrorResponse>(errorResponse, HttpStatus.OK);
+	}
+	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity <ValidationErrorResponse> handleException(MethodArgumentNotValidException ex)
 	{
