@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import com.project.food.commerce.entity.Store;
 import com.project.food.commerce.exception.StoreNotFoundException;
+import com.project.food.commerce.exceptions.ProductListEmptyException;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,11 +52,13 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public ProductResponseDTO getAllProductsInStore(Integer storeId) {
 		List<Product> productsList = productRepo.findByStoreStoreId(storeId);
+		if (productsList.isEmpty()) {
+			throw new ProductListEmptyException("There are no products for this store id: "+ storeId);
+		}
 		List<ProductDetails> productDetailsList = productsList.stream()
 				.map(product -> {
 						ProductDetails productDetail = new ProductDetails();
 						BeanUtils.copyProperties(product, productDetail);
-						System.out.println(productDetail.getProductCategory()+"    jggkhjhbkjhbkj    "+ product.getProductCategory());
 						return productDetail;
 					}).collect(Collectors.toList());
 		ResponseDTO responseDTO = new ResponseDTO("Products Details for a Store Fetch Success", 200);

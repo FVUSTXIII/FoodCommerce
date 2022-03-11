@@ -15,7 +15,7 @@ public class ProductRequestDTO {
 	private Boolean isAvailable;
 	
 	//@Size(min=1, message = "Store id must be greater than or equal to 1")
-	@NotNull
+	@NotNull(message = "StoreId should not be null")
 	private Integer storeId; 
 	
 	public String getProductName() {

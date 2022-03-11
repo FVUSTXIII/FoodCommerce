@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.project.food.commerce.constants.ApiConstants;
+import com.project.food.commerce.exceptions.ProductListEmptyException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -25,6 +26,14 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<ErrorResponse> handleException(UserNotFoundException ex)
 	{
 		ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), ApiConstants.USER_NOT_FOUND);
+		errorResponse.setDateTime(LocalDateTime.now());
+		return new ResponseEntity <ErrorResponse>(errorResponse, HttpStatus.OK);
+	}
+	
+	@ExceptionHandler(ProductListEmptyException.class)
+	public ResponseEntity<ErrorResponse> handleException(ProductListEmptyException ex)
+	{
+		ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), ApiConstants.EMPTY_PRODUCT_LIST_BY_STORE);
 		errorResponse.setDateTime(LocalDateTime.now());
 		return new ResponseEntity <ErrorResponse>(errorResponse, HttpStatus.OK);
 	}
