@@ -1,13 +1,14 @@
 package com.project.food.commerce.dto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class OrderRequestDTO {
 	
 	 private Integer userId;
-	 private List<OrderProduct> productList; 
 	 private Integer storeId;
 	 private Double totalPrice;
+	 private List<OrderDetailProduct> productList; 
 	 
 	 public Integer getUserId() {
 		return userId;
@@ -22,16 +23,21 @@ public class OrderRequestDTO {
 		this.storeId = storeId;
 	}
 	public Double getTotalPrice() {
-		return totalPrice;
+		return productList
+				.stream()
+				.mapToDouble(total -> (total.getProductPrice() * total.getProductQuantity()))
+				.sum();
 	}
 	public void setTotalPrice(Double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-	public List<OrderProduct> getProductList() {
+	public List<OrderDetailProduct> getProductList() {
 		return productList;
 	}
-	public void setProductList(List<OrderProduct> productList) {
+	public void setProductList(List<OrderDetailProduct> productList) {
 		this.productList = productList;
 	}
+	
+	
 	
 }

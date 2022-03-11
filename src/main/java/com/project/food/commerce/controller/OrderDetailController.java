@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.food.commerce.dto.OrderRequestDTO;
+import com.project.food.commerce.dto.OrderResponseDTO;
 import com.project.food.commerce.dto.ResponseDTO;
 import com.project.food.commerce.service.OrderDetailsService;
 
@@ -18,10 +19,8 @@ public class OrderDetailController {
 	OrderDetailsService orderDetailsService;
 	
 	@PostMapping("/orderdetails")
-	public ResponseEntity<ResponseDTO> completeOrder(@RequestBody OrderRequestDTO orderRequestDTO) {
-		orderDetailsService.saveOrderDetails(orderRequestDTO);
-		return new ResponseEntity<ResponseDTO> (new ResponseDTO("Product Save Success", 200), HttpStatus.ACCEPTED);
-		
+	public ResponseEntity<OrderResponseDTO> completeOrder(@RequestBody OrderRequestDTO orderRequestDTO) {
+		return new ResponseEntity<OrderResponseDTO> (orderDetailsService.saveOrderDetails(orderRequestDTO), HttpStatus.OK);
 	}
 }
 
