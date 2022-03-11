@@ -1,4 +1,4 @@
-package com.project.food.commerce.exceptions;
+package com.project.food.commerce.exception;
 
 public class ProductListEmptyException extends RuntimeException {
 

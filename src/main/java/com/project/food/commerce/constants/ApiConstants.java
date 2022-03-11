@@ -6,5 +6,6 @@ public class ApiConstants {
 	public static final String INVALID_ARGS = "MA400";
 	public static final String USER_NOT_FOUND = "US404";
 	public static final String EMPTY_PRODUCT_LIST_BY_STORE = "EPLS404";
+	public static final String ORDER_LIST_EMPTY = "OLE411";
 
 }

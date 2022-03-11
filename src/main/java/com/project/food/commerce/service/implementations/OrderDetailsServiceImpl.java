@@ -20,6 +20,7 @@ import com.project.food.commerce.entity.OrderDetail;
 import com.project.food.commerce.entity.OrderProduct;
 import com.project.food.commerce.entity.Product;
 import com.project.food.commerce.entity.Status;
+import com.project.food.commerce.exception.NoProductsWithinOrderException;
 import com.project.food.commerce.repository.OrderDetailRepository;
 import com.project.food.commerce.repository.StoreRepository;
 import com.project.food.commerce.service.OrderDetailsService;
@@ -46,6 +47,9 @@ public class OrderDetailsServiceImpl implements OrderDetailsService{
 			BeanUtils.copyProperties(orderDetailProduct, orderProduct);
 			orderDetail.addProduct(orderProduct);
 		});
+		if (orderDetail.getOrderProduct().isEmpty()) {
+			throw new NoProductsWithinOrderException("This order contains 0 products and cannot be completed.");
+		}
 		orderDetail.setStatus(Status.ACCEPTED);
 		orderDetail.setOrderDate(LocalDate.now());
 		orderRepo.save(orderDetail);

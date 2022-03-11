@@ -5,8 +5,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.project.food.commerce.entity.Store;
+import com.project.food.commerce.exception.ProductListEmptyException;
 import com.project.food.commerce.exception.StoreNotFoundException;
-import com.project.food.commerce.exceptions.ProductListEmptyException;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,6 @@ public class ProductServiceImpl implements ProductService{
 			throw new StoreNotFoundException("Store Not Found: "+ productRequestDto.getStoreId());
 		}
 			
-			
 		product.setStore(storeOptional.get());
 		productRepo.save(product);
 	}
@@ -52,6 +51,10 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public ProductResponseDTO getAllProductsInStore(Integer storeId) {
 		List<Product> productsList = productRepo.findByStoreStoreId(storeId);
+		Optional<Store> _store = storeRepo.findById(storeId); 
+		if (!_store.isPresent()) {
+			throw new StoreNotFoundException("Store Not Found: " + storeId);
+		}
 		if (productsList.isEmpty()) {
 			throw new ProductListEmptyException("There are no products for this store id: "+ storeId);
 		}
