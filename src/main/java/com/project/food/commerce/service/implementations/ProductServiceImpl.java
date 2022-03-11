@@ -55,6 +55,7 @@ public class ProductServiceImpl implements ProductService{
 				.map(product -> {
 						ProductDetails productDetail = new ProductDetails();
 						BeanUtils.copyProperties(product, productDetail);
+						System.out.println(productDetail.getProductCategory()+"    jggkhjhbkjhbkj    "+ product.getProductCategory());
 						return productDetail;
 					}).collect(Collectors.toList());
 		ResponseDTO responseDTO = new ResponseDTO("Products Details for a Store Fetch Success", 200);

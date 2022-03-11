@@ -1,24 +1,30 @@
 package com.project.food.commerce.dto;
 
+import com.project.food.commerce.entity.ProductCategory;
+
 public class ProductDetails {
 
 	private Integer productId;
 	private String productName;
 	private Double productPrice;
 	private String productDescription;
-	private String productCategory;
+	
+	private ProductCategory productCategory;
 	private Boolean isAvailable;
 	//private Store store;
 	
 	public Integer getProductId() {
 		return productId;
 	}
-	public String getProductCategory() {
+	
+	public ProductCategory getProductCategory() {
 		return productCategory;
 	}
-	public void setProductCategory(String productCategory) {
+
+	public void setProductCategory(ProductCategory productCategory) {
 		this.productCategory = productCategory;
 	}
+
 	public void setProductId(Integer productId) {
 		this.productId = productId;
 	}
