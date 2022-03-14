@@ -26,6 +26,7 @@ import com.project.food.commerce.entity.OrderProduct;
 import com.project.food.commerce.entity.Product;
 import com.project.food.commerce.entity.Status;
 import com.project.food.commerce.exception.EmptyOrderHistoryException;
+import com.project.food.commerce.exception.InconsistentPricesException;
 import com.project.food.commerce.exception.NoAvailableProductsException;
 import com.project.food.commerce.exception.NoProductsWithinOrderException;
 import com.project.food.commerce.repository.OrderDetailRepository;
@@ -51,6 +52,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService{
 	@Override
 	public OrderResponseDTO saveOrderDetails(OrderRequestDTO orderRequestDTO) {
 		List<String> noAvailable = new ArrayList<String>();
+		List<String> unmatchedPrices = new ArrayList<String>();
 		OrderDetail orderDetail = new OrderDetail();
 		BeanUtils.copyProperties(orderRequestDTO, orderDetail);
 		orderDetail.setTotalPrice(orderRequestDTO.getTotalPrice());
@@ -59,9 +61,15 @@ public class OrderDetailsServiceImpl implements OrderDetailsService{
 		.forEach(orderDetailProduct -> {
 			OrderProduct orderProduct = new OrderProduct();
 			Optional<Product> product = productRepo.findById(orderDetailProduct.getProductId());
+			if (product.get().getProductPrice() != orderDetailProduct.getProductPrice()) {
+				
+				String inconsistent_element = product.get().getProductName() + ","+ orderDetailProduct.getProductPrice() + "," + 
+												 + product.get().getProductPrice();
+				unmatchedPrices.add(inconsistent_element);											
+			}
             if (!product.get().getIsAvailable()) {
             	noAvailable.add(product.get().getProductName());
-           		}
+       		}
 			BeanUtils.copyProperties(orderDetailProduct, orderProduct);
 			orderDetail.addProduct(orderProduct);
 			
@@ -74,7 +82,13 @@ public class OrderDetailsServiceImpl implements OrderDetailsService{
 			concatenate=concatenate.substring(0, concatenate.length()-2);
 			throw new NoAvailableProductsException("These products are not available:  "+ concatenate);	
 		}
-		
+		if (!unmatchedPrices.isEmpty()) {
+			String concatenate = "";
+			for (String s: unmatchedPrices) {
+				concatenate += s + "|";
+			}
+			throw new InconsistentPricesException(concatenate);
+		}
 		
 		orderDetail.setStatus(Status.ACCEPTED);
 		orderDetail.setOrderDate(LocalDate.now());

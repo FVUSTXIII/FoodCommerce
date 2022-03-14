@@ -2,6 +2,7 @@ package com.project.food.commerce.dto;
 
 public class OrderDetailProduct {
 	private Integer productId;
+	
 	private Double productPrice;
 	private Integer productQuantity;
 	

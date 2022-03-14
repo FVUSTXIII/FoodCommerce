@@ -9,5 +9,6 @@ public class ApiConstants {
 	public static final String ORDER_LIST_EMPTY = "OLE411";
 	public static final String NO_AVAILABLE_PRODUCT = "NAP401";
 	public static final String EMPTY_ORDER_HISTORY = "EOH411";
+	public static final String INCONSISTENT_PRICES_IN_ORDER = "IPIO401";
 
 }

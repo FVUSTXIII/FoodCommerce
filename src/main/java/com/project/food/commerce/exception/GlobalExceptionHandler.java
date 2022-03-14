@@ -21,6 +21,12 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity <ErrorResponse>(errorResponse, HttpStatus.OK);
 	}
 	
+	@ExceptionHandler(InconsistentPricesException.class)
+	public ResponseEntity<ErrorResponse> handleException(InconsistentPricesException ex) {
+		ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), ApiConstants.INCONSISTENT_PRICES_IN_ORDER);
+		errorResponse.setDateTime(LocalDateTime.now());
+		return new ResponseEntity <ErrorResponse>(errorResponse, HttpStatus.OK);
+	}
 	@ExceptionHandler(UserNotFoundException.class)
 	public ResponseEntity<ErrorResponse> handleException(UserNotFoundException ex)
 	{
