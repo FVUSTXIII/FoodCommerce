@@ -1,5 +1,7 @@
 package com.project.food.commerce.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,7 @@ public class OrderDetailController {
 	OrderDetailsService orderDetailsService;
 	
 	@PostMapping("/orderdetails")
-	public ResponseEntity<OrderResponseDTO> completeOrder(@RequestBody OrderRequestDTO orderRequestDTO) {
+	public ResponseEntity<OrderResponseDTO> completeOrder(@Valid @RequestBody OrderRequestDTO orderRequestDTO) {
 		return new ResponseEntity<OrderResponseDTO> (orderDetailsService.saveOrderDetails(orderRequestDTO), HttpStatus.OK);
 	}
 	

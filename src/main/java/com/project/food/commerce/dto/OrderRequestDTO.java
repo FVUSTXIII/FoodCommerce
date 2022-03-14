@@ -2,11 +2,14 @@ package com.project.food.commerce.dto;
 
 import java.util.List;
 
+import javax.validation.constraints.Size;
+
 public class OrderRequestDTO {
 	
 	 private Integer userId;
 	 private Integer storeId;
 	 private Double totalPrice;
+	 @Size(min = 1, message = "The product list should at least contain 1 product")
 	 private List<OrderDetailProduct> productList; 
 	 
 	 public Integer getUserId() {

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.food.commerce.dto.ResponseDTO;
+import com.project.food.commerce.dto.UserDetailsDTO;
 import com.project.food.commerce.dto.UserRequestDTO;
 import com.project.food.commerce.dto.UserResponseDTO;
 import com.project.food.commerce.entity.User;
@@ -30,6 +31,14 @@ public class UserServiceImpl implements UserService {
 		userResponseDTO.setResponseDTO(responseDTO);
 		return userResponseDTO;
 
+	}
+
+	@Override
+	public UserDetailsDTO getUserDetails(Integer userId) {
+		UserDetailsDTO userDetailsDTO = userRepository.findByUserId(userId);
+		ResponseDTO responseDTO = new ResponseDTO("User Information Fetched Successfully", 200);
+		userDetailsDTO.setResponseDTO(responseDTO);
+		return userDetailsDTO;
 	}
 
 }

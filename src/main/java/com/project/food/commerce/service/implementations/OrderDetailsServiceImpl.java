@@ -75,9 +75,6 @@ public class OrderDetailsServiceImpl implements OrderDetailsService{
 			throw new NoAvailableProductsException("These products are not available:  "+ concatenate);	
 		}
 		
-		if (orderDetail.getOrderProduct().isEmpty()) {
-			throw new NoProductsWithinOrderException("This order contains 0 products and cannot be completed.");
-		}
 		
 		orderDetail.setStatus(Status.ACCEPTED);
 		orderDetail.setOrderDate(LocalDate.now());
