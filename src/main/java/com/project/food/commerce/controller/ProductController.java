@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.food.commerce.dto.ProductRequestDTO;
 import com.project.food.commerce.dto.ProductResponseDTO;
 import com.project.food.commerce.dto.ResponseDTO;
+import com.project.food.commerce.entity.Product;
 import com.project.food.commerce.service.ProductService;
 
 @RestController
