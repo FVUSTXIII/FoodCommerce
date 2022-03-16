@@ -87,6 +87,7 @@ public class ProductServiceImplTest {
 	public void saveProductDetailsTest2() {
 		when(storeRepository.findById(2)).thenReturn(Optional.empty());
 		//comentario innecesario
+		//comentario innecesario 2
 		assertThrows(StoreNotFoundException.class, () -> productServiceImpl.saveProductDetails(productRequestDTO));
 	}
 }
