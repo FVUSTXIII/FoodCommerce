@@ -86,7 +86,7 @@ public class ProductServiceImplTest {
 	@DisplayName("Store found: negative")
 	public void saveProductDetailsTest2() {
 		when(storeRepository.findById(2)).thenReturn(Optional.empty());
-
+		//comentario innecesario
 		assertThrows(StoreNotFoundException.class, () -> productServiceImpl.saveProductDetails(productRequestDTO));
 	}
 }
