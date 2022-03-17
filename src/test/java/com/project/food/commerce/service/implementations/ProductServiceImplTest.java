@@ -115,7 +115,7 @@ public class ProductServiceImplTest {
 		productRequestDTO2.setProductCategory("NOVEGGIE");
 		productRequestDTO2.setProductPrice(15.0);
 		productRequestDTO2.setProductDescription(" example");
-		productRequestDTO2.setStoreId(4);
+		productRequestDTO2.setStoreId(2);
 		productRequestDTO2.setIsAvailable(true);
 		
 		productRequestDTO3 = new ProductRequestDTO();
@@ -125,11 +125,7 @@ public class ProductServiceImplTest {
 		
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
-        
-		
-        System.out.println("Producto: "+store.getProduct().get(0).getProductName());
-        
-       paging = PageRequest.of(0,5);
+        paging = PageRequest.of(0,5);
         
         
         
