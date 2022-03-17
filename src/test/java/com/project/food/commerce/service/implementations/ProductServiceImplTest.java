@@ -127,7 +127,7 @@ public class ProductServiceImplTest {
         validator = factory.getValidator();
         
 		
-        System.out.println("Producto: "+store.getProduct().get(0).getProductName());
+        //System.out.println("Producto: "+store.getProduct().get(0).getProductName());
         
        paging = PageRequest.of(0,5);
         
@@ -157,7 +157,7 @@ public class ProductServiceImplTest {
 	@Test
 	@DisplayName("Store found: negative")
 	public void saveProductDetailsTest2() {
-		when(storeRepository.findById(2)).thenReturn(Optional.empty());
+		when(storeRepository.findById(4)).thenReturn(Optional.empty());
 
 		assertThrows(StoreNotFoundException.class, () -> productServiceImpl.saveProductDetails(productRequestDTO2));
 	}
