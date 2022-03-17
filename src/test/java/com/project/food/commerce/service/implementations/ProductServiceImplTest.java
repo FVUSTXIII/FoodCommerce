@@ -94,7 +94,8 @@ public class ProductServiceImplTest {
         producto1.setProductPrice(100.0);
         producto1.setProductId(1);
         producto1.setStore(store);
-		
+		List<Product> p = new ArrayList();
+		p.add(producto1);
 		Address a = new Address();
 		a.setNameSt("Avenida siempre viva");
 		a.setNeighborhood("Puerta de Fierro");
@@ -114,7 +115,7 @@ public class ProductServiceImplTest {
 		productRequestDTO2.setProductCategory("NOVEGGIE");
 		productRequestDTO2.setProductPrice(15.0);
 		productRequestDTO2.setProductDescription("Lonche bien vergas");
-		productRequestDTO2.setStoreId(2);
+		productRequestDTO2.setStoreId(4);
 		productRequestDTO2.setIsAvailable(true);
 		
 		productRequestDTO3 = new ProductRequestDTO();
@@ -129,7 +130,7 @@ public class ProductServiceImplTest {
         
         System.out.println("Pinche producto: "+store.getProduct().get(0).getProductName());
         
-        paging = PageRequest.of(0,5);
+       paging = PageRequest.of(0,5);
         
         
         
@@ -172,14 +173,14 @@ public class ProductServiceImplTest {
 	}
 	
 	@Test
-	@DisplayName("jjj")
+	@DisplayName("inconclusive test!")
 	public void getAllProductsInStore1()
 	{
-		when(productRepository.findByStoreStoreId(4,paging)).thenReturn(page);
+		when(productRepository.findByStoreStoreId(4,paging)).thenReturn(page); 
 		when(storeRepository.findById(4)).thenReturn(Optional.of(store));
 		ProductResponseDTO productResponseDTO = productServiceImpl.getAllProductsInStore(0,5,4);
 		assertNotNull(productResponseDTO);
-		//assertThrows(StoreNotFoundException.class, () -> productServiceImpl.getAllProductsInStore(0,1,4));
+		assertThrows(StoreNotFoundException.class, () -> productServiceImpl.getAllProductsInStore(0,1,4));
 	}
 	
 	
