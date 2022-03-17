@@ -23,6 +23,7 @@ import static org.mockito.Mockito.when;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -126,12 +127,7 @@ public class ProductServiceImplTest {
         validator = factory.getValidator();
         
 		
-        
-<<<<<<< HEAD
-        //System.out.println("Pinche producto: "+store.getProduct().get(0).getProductName());
-=======
         System.out.println("Producto: "+store.getProduct().get(0).getProductName());
->>>>>>> dd91af33670f04c86aa2f02384d9e7492922ae4c
         
        paging = PageRequest.of(0,5);
         
@@ -183,12 +179,6 @@ public class ProductServiceImplTest {
 		when(storeRepository.findById(4)).thenReturn(Optional.of(store));
 		ProductResponseDTO productResponseDTO = productServiceImpl.getAllProductsInStore(0,5,4);
 		assertNotNull(productResponseDTO);
-<<<<<<< HEAD
-		
-		//assertThrows(StoreNotFoundException.class, () -> productServiceImpl.getAllProductsInStore(0,1,4));
-=======
-		assertThrows(StoreNotFoundException.class, () -> productServiceImpl.getAllProductsInStore(0,1,4));
->>>>>>> dd91af33670f04c86aa2f02384d9e7492922ae4c
 	}
 	
 	
