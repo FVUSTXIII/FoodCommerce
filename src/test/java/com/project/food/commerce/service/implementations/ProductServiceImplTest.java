@@ -90,7 +90,7 @@ public class ProductServiceImplTest {
         producto1.setIsAvailable(true);
         producto1.setProductCategory(ProductCategory.NOVEGGIE);
         producto1.setProductDescription("Producto unico");
-        producto1.setProductName("Producto 1");
+        producto1.setProductName("Product example");
         producto1.setProductPrice(100.0);
         producto1.setProductId(1);
         producto1.setStore(store);
@@ -104,7 +104,7 @@ public class ProductServiceImplTest {
 		store = new Store();
 		store.setStoreId(4);
 		store.setAddress(a);
-		store.setStoreName("Lonches Perrones");
+		store.setStoreName("Lonches");
 		store.setStoreRating(4.8);
 		store.setStoreDescription("Las mejores tortas (lonches) del condado");
 		store.setOpenTill(LocalTime.NOON);
@@ -114,7 +114,7 @@ public class ProductServiceImplTest {
 		productRequestDTO2.setProductName("Torta de jamón");
 		productRequestDTO2.setProductCategory("NOVEGGIE");
 		productRequestDTO2.setProductPrice(15.0);
-		productRequestDTO2.setProductDescription("Lonche bien vergas");
+		productRequestDTO2.setProductDescription(" example");
 		productRequestDTO2.setStoreId(4);
 		productRequestDTO2.setIsAvailable(true);
 		
@@ -128,7 +128,7 @@ public class ProductServiceImplTest {
         
 		
         
-        System.out.println("Pinche producto: "+store.getProduct().get(0).getProductName());
+        System.out.println("Producto: "+store.getProduct().get(0).getProductName());
         
        paging = PageRequest.of(0,5);
         
