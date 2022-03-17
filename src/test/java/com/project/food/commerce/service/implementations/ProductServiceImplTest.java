@@ -1,6 +1,7 @@
 package com.project.food.commerce.service.implementations;
 
 import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,6 +29,7 @@ import com.project.food.commerce.entity.Store;
 import com.project.food.commerce.exception.StoreNotFoundException;
 import com.project.food.commerce.repository.ProductRepository;
 import com.project.food.commerce.repository.StoreRepository;
+
 @ExtendWith(MockitoExtension.class)
 public class ProductServiceImplTest {
 	@Mock
@@ -48,7 +50,7 @@ public class ProductServiceImplTest {
 		productRequestDTO.setProductName("Torta de jamón");
 		productRequestDTO.setProductCategory("NOVEGGIE");
 		productRequestDTO.setProductPrice(15.0);
-		productRequestDTO.setProductDescription("Lonche bien vergas");
+		productRequestDTO.setProductDescription("Lonche chido");
 		productRequestDTO.setStoreId(4);
 		productRequestDTO.setIsAvailable(true);
 		Address a = new Address();
@@ -62,7 +64,7 @@ public class ProductServiceImplTest {
 		store.setStoreName("Lonches Perrones");
 		store.setStoreRating(4.8);
 		store.setStoreDescription("Las mejores tortas (lonches) del condado");
-		store.setOpenTill(LocalTime.NOON);
+	    store.setOpenTill(LocalTime.NOON);
 	}
 	
 	@Test

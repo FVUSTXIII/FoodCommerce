@@ -5,9 +5,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class NewFoodCommerceApplicationTests {
-
+/*
 	@Test
 	void contextLoads() {
 	}
+	*/
 
 }
