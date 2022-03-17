@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -17,11 +18,18 @@ import static org.mockito.Mockito.when;
 
 import java.time.LocalTime;
 import java.util.Optional;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 import org.mockito.InjectMocks;
 
 
 import com.project.food.commerce.dto.ProductRequestDTO;
+import com.project.food.commerce.dto.UserRequestDTO;
 import com.project.food.commerce.entity.Address;
 import com.project.food.commerce.entity.Product;
 import com.project.food.commerce.entity.ProductCategory;
@@ -42,6 +50,11 @@ public class ProductServiceImplTest {
 	ProductServiceImpl productServiceImpl;
 	
 	ProductRequestDTO productRequestDTO;
+	ProductRequestDTO productRequestDTO2;
+	ProductRequestDTO productRequestDTO3;
+	
+	Validator validator;
+	
 	Store store;
 	
 	@BeforeEach
@@ -53,6 +66,7 @@ public class ProductServiceImplTest {
 		productRequestDTO.setProductDescription("Lonche chido");
 		productRequestDTO.setStoreId(4);
 		productRequestDTO.setIsAvailable(true);
+		
 		Address a = new Address();
 		a.setNameSt("Avenida siempre viva");
 		a.setNeighborhood("Puerta de Fierro");
@@ -64,7 +78,27 @@ public class ProductServiceImplTest {
 		store.setStoreName("Lonches Perrones");
 		store.setStoreRating(4.8);
 		store.setStoreDescription("Las mejores tortas (lonches) del condado");
+<<<<<<< HEAD
 	    store.setOpenTill(LocalTime.NOON);
+=======
+		store.setOpenTill(LocalTime.NOON);
+		
+		productRequestDTO2 = new ProductRequestDTO();
+		productRequestDTO2.setProductName("Torta de jamón");
+		productRequestDTO2.setProductCategory("NOVEGGIE");
+		productRequestDTO2.setProductPrice(15.0);
+		productRequestDTO2.setProductDescription("Lonche bien vergas");
+		productRequestDTO2.setStoreId(2);
+		productRequestDTO2.setIsAvailable(true);
+		
+		productRequestDTO3 = new ProductRequestDTO();
+		productRequestDTO3.setProductName("");
+		productRequestDTO3.setProductCategory("");
+		productRequestDTO3.setStoreId(null);
+		
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
+>>>>>>> unit-testing-ocyel
 	}
 	
 	@Test
@@ -88,8 +122,22 @@ public class ProductServiceImplTest {
 	@DisplayName("Store found: negative")
 	public void saveProductDetailsTest2() {
 		when(storeRepository.findById(2)).thenReturn(Optional.empty());
+<<<<<<< HEAD
 		//comentario innecesario
 		//comentario innecesario 2
 		assertThrows(StoreNotFoundException.class, () -> productServiceImpl.saveProductDetails(productRequestDTO));
+=======
+		
+		assertThrows(StoreNotFoundException.class, () -> productServiceImpl.saveProductDetails(productRequestDTO2));
+	}
+	
+	@Test
+	@DisplayName("Product empty arguments")
+	public void saveProductDetailsTest3()
+	{
+		
+		 Set<ConstraintViolation<ProductRequestDTO>> validations = validator.validate(productRequestDTO3);
+		 assertFalse(validations.isEmpty());
+>>>>>>> unit-testing-ocyel
 	}
 }
