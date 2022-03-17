@@ -23,7 +23,6 @@ import static org.mockito.Mockito.when;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -107,7 +106,7 @@ public class ProductServiceImplTest {
 		store.setStoreRating(4.8);
 		store.setStoreDescription("Las mejores tortas (lonches) del condado");
 		store.setOpenTill(LocalTime.NOON);
-		store.setProduct(List.of(producto1));
+		//store.setProduct(List.of(producto1));
 		
 		productRequestDTO2 = new ProductRequestDTO();
 		productRequestDTO2.setProductName("Torta de jamón");
@@ -127,7 +126,7 @@ public class ProductServiceImplTest {
         
 		
         
-        System.out.println("Pinche producto: "+store.getProduct().get(0).getProductName());
+        //System.out.println("Pinche producto: "+store.getProduct().get(0).getProductName());
         
         paging = PageRequest.of(0,5);
         
@@ -179,6 +178,7 @@ public class ProductServiceImplTest {
 		when(storeRepository.findById(4)).thenReturn(Optional.of(store));
 		ProductResponseDTO productResponseDTO = productServiceImpl.getAllProductsInStore(0,5,4);
 		assertNotNull(productResponseDTO);
+		
 		//assertThrows(StoreNotFoundException.class, () -> productServiceImpl.getAllProductsInStore(0,1,4));
 	}
 	
