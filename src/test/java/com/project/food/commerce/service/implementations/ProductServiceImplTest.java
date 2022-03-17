@@ -6,7 +6,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -17,6 +22,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -29,6 +36,7 @@ import org.mockito.InjectMocks;
 
 
 import com.project.food.commerce.dto.ProductRequestDTO;
+import com.project.food.commerce.dto.ProductResponseDTO;
 import com.project.food.commerce.dto.UserRequestDTO;
 import com.project.food.commerce.entity.Address;
 import com.project.food.commerce.entity.Product;
@@ -46,6 +54,9 @@ public class ProductServiceImplTest {
 	@Mock
 	ProductRepository productRepository;
 	
+	@Mock
+	Page<Product> page;// = Mockito.mock(Page.class);
+	
 	@InjectMocks
 	ProductServiceImpl productServiceImpl;
 	
@@ -57,8 +68,16 @@ public class ProductServiceImplTest {
 	
 	Store store;
 	
+	Pageable paging;
+	
+	Product producto1;
+	
+	
+	
+	
 	@BeforeEach
 	public void setUp() {
+	
 		productRequestDTO = new ProductRequestDTO();
 		productRequestDTO.setProductName("Torta de jamón");
 		productRequestDTO.setProductCategory("NOVEGGIE");
@@ -66,6 +85,15 @@ public class ProductServiceImplTest {
 		productRequestDTO.setProductDescription("Lonche chido");
 		productRequestDTO.setStoreId(4);
 		productRequestDTO.setIsAvailable(true);
+		
+		producto1= new Product();
+        producto1.setIsAvailable(true);
+        producto1.setProductCategory(ProductCategory.NOVEGGIE);
+        producto1.setProductDescription("Producto unico");
+        producto1.setProductName("Producto 1");
+        producto1.setProductPrice(100.0);
+        producto1.setProductId(1);
+        producto1.setStore(store);
 		
 		Address a = new Address();
 		a.setNameSt("Avenida siempre viva");
@@ -78,10 +106,8 @@ public class ProductServiceImplTest {
 		store.setStoreName("Lonches Perrones");
 		store.setStoreRating(4.8);
 		store.setStoreDescription("Las mejores tortas (lonches) del condado");
-<<<<<<< HEAD
-	    store.setOpenTill(LocalTime.NOON);
-=======
 		store.setOpenTill(LocalTime.NOON);
+		store.setProduct(List.of(producto1));
 		
 		productRequestDTO2 = new ProductRequestDTO();
 		productRequestDTO2.setProductName("Torta de jamón");
@@ -98,7 +124,17 @@ public class ProductServiceImplTest {
 		
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
->>>>>>> unit-testing-ocyel
+        
+		
+        
+        System.out.println("Pinche producto: "+store.getProduct().get(0).getProductName());
+        
+        paging = PageRequest.of(0,5);
+        
+        
+        
+        
+        
 	}
 	
 	@Test
@@ -122,12 +158,7 @@ public class ProductServiceImplTest {
 	@DisplayName("Store found: negative")
 	public void saveProductDetailsTest2() {
 		when(storeRepository.findById(2)).thenReturn(Optional.empty());
-<<<<<<< HEAD
-		//comentario innecesario
-		//comentario innecesario 2
-		assertThrows(StoreNotFoundException.class, () -> productServiceImpl.saveProductDetails(productRequestDTO));
-=======
-		
+
 		assertThrows(StoreNotFoundException.class, () -> productServiceImpl.saveProductDetails(productRequestDTO2));
 	}
 	
@@ -138,6 +169,18 @@ public class ProductServiceImplTest {
 		
 		 Set<ConstraintViolation<ProductRequestDTO>> validations = validator.validate(productRequestDTO3);
 		 assertFalse(validations.isEmpty());
->>>>>>> unit-testing-ocyel
 	}
+	
+	@Test
+	@DisplayName("jjj")
+	public void getAllProductsInStore1()
+	{
+		when(productRepository.findByStoreStoreId(4,paging)).thenReturn(page);
+		when(storeRepository.findById(4)).thenReturn(Optional.of(store));
+		ProductResponseDTO productResponseDTO = productServiceImpl.getAllProductsInStore(0,5,4);
+		assertNotNull(productResponseDTO);
+		//assertThrows(StoreNotFoundException.class, () -> productServiceImpl.getAllProductsInStore(0,1,4));
+	}
+	
+	
 }
