@@ -89,11 +89,12 @@ public class ProductServiceImplTest {
         producto1.setIsAvailable(true);
         producto1.setProductCategory(ProductCategory.NOVEGGIE);
         producto1.setProductDescription("Producto unico");
-        producto1.setProductName("Producto 1");
+        producto1.setProductName("Product example");
         producto1.setProductPrice(100.0);
         producto1.setProductId(1);
         producto1.setStore(store);
-		
+		List<Product> p = new ArrayList();
+		p.add(producto1);
 		Address a = new Address();
 		a.setNameSt("Avenida siempre viva");
 		a.setNeighborhood("Puerta de Fierro");
@@ -102,7 +103,7 @@ public class ProductServiceImplTest {
 		store = new Store();
 		store.setStoreId(4);
 		store.setAddress(a);
-		store.setStoreName("Lonches Perrones");
+		store.setStoreName("Lonches");
 		store.setStoreRating(4.8);
 		store.setStoreDescription("Las mejores tortas (lonches) del condado");
 		store.setOpenTill(LocalTime.NOON);
@@ -112,8 +113,8 @@ public class ProductServiceImplTest {
 		productRequestDTO2.setProductName("Torta de jamón");
 		productRequestDTO2.setProductCategory("NOVEGGIE");
 		productRequestDTO2.setProductPrice(15.0);
-		productRequestDTO2.setProductDescription("Lonche bien vergas");
-		productRequestDTO2.setStoreId(2);
+		productRequestDTO2.setProductDescription(" example");
+		productRequestDTO2.setStoreId(4);
 		productRequestDTO2.setIsAvailable(true);
 		
 		productRequestDTO3 = new ProductRequestDTO();
@@ -126,9 +127,13 @@ public class ProductServiceImplTest {
         
 		
         
+<<<<<<< HEAD
         //System.out.println("Pinche producto: "+store.getProduct().get(0).getProductName());
+=======
+        System.out.println("Producto: "+store.getProduct().get(0).getProductName());
+>>>>>>> dd91af33670f04c86aa2f02384d9e7492922ae4c
         
-        paging = PageRequest.of(0,5);
+       paging = PageRequest.of(0,5);
         
         
         
@@ -171,15 +176,19 @@ public class ProductServiceImplTest {
 	}
 	
 	@Test
-	@DisplayName("jjj")
+	@DisplayName("inconclusive test!")
 	public void getAllProductsInStore1()
 	{
-		when(productRepository.findByStoreStoreId(4,paging)).thenReturn(page);
+		when(productRepository.findByStoreStoreId(4,paging)).thenReturn(page); 
 		when(storeRepository.findById(4)).thenReturn(Optional.of(store));
 		ProductResponseDTO productResponseDTO = productServiceImpl.getAllProductsInStore(0,5,4);
 		assertNotNull(productResponseDTO);
+<<<<<<< HEAD
 		
 		//assertThrows(StoreNotFoundException.class, () -> productServiceImpl.getAllProductsInStore(0,1,4));
+=======
+		assertThrows(StoreNotFoundException.class, () -> productServiceImpl.getAllProductsInStore(0,1,4));
+>>>>>>> dd91af33670f04c86aa2f02384d9e7492922ae4c
 	}
 	
 	
