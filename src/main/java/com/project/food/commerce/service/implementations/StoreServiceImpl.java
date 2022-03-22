@@ -26,9 +26,11 @@ public class StoreServiceImpl implements StoreService {
 	@Override
 	public StoreResponseDTO getAllStoreDetails(Integer pageNo, Integer pageSize) {
 		Pageable paging = PageRequest.of(pageNo, pageSize);
-		// TODO Auto-generated method stub
-		Page<Store> storePage = storeRepository.findAll(paging);
-		List<Store> storeList = storePage.getContent();
+		//Page<Store> storePage = storeRepository.findAll(paging);
+		//List<Store> storeList = storePage.getContent();
+		List<Store> storeList = storeRepository.findAll(paging).getContent();
+		//System.out.println(storeRepository.findAll(paging).getContent().get(0).getProduct().get(0).getProductName());
+		
 		List<StoreDetails> storeDetailsList = storeList.stream()
 				.map(store -> {
 						StoreDetails storeDetail = new StoreDetails();

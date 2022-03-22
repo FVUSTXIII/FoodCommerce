@@ -10,4 +10,5 @@ import com.project.food.commerce.entity.Store;
 public interface StoreRepository extends JpaRepository<Store, Integer> {
 	
 	
+	
 }
