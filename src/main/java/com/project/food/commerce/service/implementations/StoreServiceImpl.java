@@ -10,8 +10,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.project.food.commerce.dto.ProductClosedInterface;
 import com.project.food.commerce.dto.ResponseDTO;
 import com.project.food.commerce.dto.StoreDetails;
+import com.project.food.commerce.dto.StoreOpenInterface;
 import com.project.food.commerce.dto.StoreResponseDTO;
 import com.project.food.commerce.entity.Store;
 import com.project.food.commerce.repository.StoreRepository;
@@ -43,5 +45,13 @@ public class StoreServiceImpl implements StoreService {
 		storeResponseDto.setResponseDTO(responseDTO);
 		return storeResponseDto;
 	}
+
+	@Override
+	public StoreOpenInterface getSpecificStore(Integer storeId) {
+		StoreOpenInterface response = storeRepository.findStoreByStoreId(storeId);
+		return response;
+	}
+	
+	
 	
 }

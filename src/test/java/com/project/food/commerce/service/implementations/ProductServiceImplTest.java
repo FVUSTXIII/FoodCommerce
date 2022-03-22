@@ -108,14 +108,14 @@ public class ProductServiceImplTest {
 		store.setStoreRating(4.8);
 		store.setStoreDescription("Las mejores tortas (lonches) del condado");
 		store.setOpenTill(LocalTime.NOON);
-		//store.setProduct(List.of(producto1));
+		store.setProduct(List.of(producto1));
 		
 		productRequestDTO2 = new ProductRequestDTO();
 		productRequestDTO2.setProductName("Torta de jamón");
 		productRequestDTO2.setProductCategory("NOVEGGIE");
 		productRequestDTO2.setProductPrice(15.0);
 		productRequestDTO2.setProductDescription(" example");
-		productRequestDTO2.setStoreId(4);
+		productRequestDTO2.setStoreId(2);
 		productRequestDTO2.setIsAvailable(true);
 		
 		productRequestDTO3 = new ProductRequestDTO();
@@ -125,11 +125,15 @@ public class ProductServiceImplTest {
 		
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
+<<<<<<< HEAD
         
 		
         //System.out.println("Producto: "+store.getProduct().get(0).getProductName());
         
        paging = PageRequest.of(0,5);
+=======
+        paging = PageRequest.of(0,5);
+>>>>>>> unreleased
         
         
         

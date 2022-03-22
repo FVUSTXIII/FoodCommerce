@@ -1,5 +1,7 @@
 package com.project.food.commerce.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.food.commerce.dto.ProductClosedInterface;
 import com.project.food.commerce.dto.ProductRequestDTO;
 import com.project.food.commerce.dto.ProductResponseDTO;
 import com.project.food.commerce.dto.ResponseDTO;
@@ -38,4 +41,9 @@ public class ProductController {
 		return new ResponseEntity<ProductResponseDTO>(productResponseDto, HttpStatus.OK);
 	}
 	
+	@GetMapping("/products/{productId}")
+	public ResponseEntity<ProductClosedInterface> getProduct (@PathVariable("productId") Integer productId) {
+		ProductClosedInterface product = productService.getSpecificProduct(productId);
+		return new ResponseEntity<ProductClosedInterface>(product, HttpStatus.OK);
+	}
 }
