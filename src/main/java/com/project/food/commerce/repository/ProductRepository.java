@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.food.commerce.dto.ProductClosedInterface;
+import com.project.food.commerce.dto.StoreOpenInterface;
 import com.project.food.commerce.entity.Product;
  
 @Repository
