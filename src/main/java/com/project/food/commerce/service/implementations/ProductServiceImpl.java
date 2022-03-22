@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.project.food.commerce.dto.ProductClosedInterface;
 import com.project.food.commerce.dto.ProductDetails;
 import com.project.food.commerce.dto.ProductRequestDTO;
 import com.project.food.commerce.dto.ProductResponseDTO;
@@ -78,6 +79,14 @@ public class ProductServiceImpl implements ProductService{
 	
 		
 		return productResponseDto;
+	}
+
+
+	@Override
+	public ProductClosedInterface getSpecificProduct(Integer productId) {
+		// TODO Auto-generated method stub
+		ProductClosedInterface response = productRepo.findProductByProductId(productId);
+		return response;
 	}
 	
 }

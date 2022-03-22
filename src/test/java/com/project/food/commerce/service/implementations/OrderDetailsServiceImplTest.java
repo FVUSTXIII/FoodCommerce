@@ -43,7 +43,6 @@ public class OrderDetailsServiceImplTest {
 	@Mock
 	OrderDetailRepository orderDetailRepository;
 	
-	@MockBean
 	Store store;
 	
 	@InjectMocks
@@ -87,6 +86,9 @@ public class OrderDetailsServiceImplTest {
 			ODP.setProductPrice(product.getProductPrice());
 			ODP.setProductQuantity(1);
 			FormattedProducts.add(ODP);
+		});
+		FormattedProducts.forEach(product -> {
+			System.out.println("... " + product.getProductId());
 		});
 		orderRequestDTO1.setProductList(FormattedProducts);
 		

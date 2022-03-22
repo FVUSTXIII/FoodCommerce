@@ -108,7 +108,7 @@ public class ProductServiceImplTest {
 		store.setStoreRating(4.8);
 		store.setStoreDescription("Las mejores tortas (lonches) del condado");
 		store.setOpenTill(LocalTime.NOON);
-		//store.setProduct(List.of(producto1));
+		store.setProduct(List.of(producto1));
 		
 		productRequestDTO2 = new ProductRequestDTO();
 		productRequestDTO2.setProductName("Torta de jamón");
